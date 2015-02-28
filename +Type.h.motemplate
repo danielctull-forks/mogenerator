@@ -1,0 +1,7 @@
+
+#import "_<$managedObjectClassName$>.h"
+#import "<$managedObjectClassName$>Type.h"
+
+
+@interface _<$managedObjectClassName$> (<$managedObjectClassName$>Type) <<$managedObjectClassName$>Type> 
+@end

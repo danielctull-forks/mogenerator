@@ -4,6 +4,7 @@
 <$if TemplateVar.modules$>@import CoreData;<$else$>#import <CoreData/CoreData.h><$endif$>
 <$if hasCustomSuperentity$><$if hasSuperentity$>#import "<$customSuperentity$>.h"
 <$else$><$if hasCustomBaseCaseImport$>#import <$baseClassImport$><$else$>#import "<$customSuperentity$>.h"<$endif$><$endif$><$endif$>
+#import "<$managedObjectClassName$>Type.h"
 
 <$if noninheritedAttributes.@count > 0$>
 extern const struct <$managedObjectClassName$>Attributes {<$foreach Attribute noninheritedAttributes do$>
@@ -48,6 +49,7 @@ extern const struct <$managedObjectClassName$>UserInfo {<$foreach UserInfo userI
  * <$userInfo.discussion$>
  */
 <$endif$>
+
 @interface _<$managedObjectClassName$> : <$customSuperentity$> {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
@@ -99,14 +101,14 @@ extern const struct <$managedObjectClassName$>UserInfo {<$foreach UserInfo userI
 <$endif$>
 <$if Relationship.isToMany$>
 <$if TemplateVar.arc$>
-@property (nonatomic, strong) <$Relationship.immutableCollectionClassName$> *<$Relationship.name$>;
+@property (nonatomic, readwrite) <$Relationship.immutableCollectionClassName$> *<$Relationship.name$>;
 <$else$>
 @property (nonatomic, retain) <$Relationship.immutableCollectionClassName$> *<$Relationship.name$>;
 <$endif$>
 - (<$Relationship.mutableCollectionClassName$>*)<$Relationship.name$>Set;
 <$else$>
 <$if TemplateVar.arc$>
-@property (nonatomic, strong) <$Relationship.destinationEntity.managedObjectClassName$> *<$Relationship.name$>;
+@property (nonatomic, readwrite) <$Relationship.destinationEntity.managedObjectClassName$> *<$Relationship.name$>;
 <$else$>
 @property (nonatomic, retain) <$Relationship.destinationEntity.managedObjectClassName$> *<$Relationship.name$>;
 <$endif$>
@@ -172,4 +174,7 @@ extern const struct <$managedObjectClassName$>UserInfo {<$foreach UserInfo userI
 - (void)setPrimitive<$Relationship.name.initialCapitalString$>:(<$Relationship.destinationEntity.managedObjectClassName$>*)value;
 <$endif$>
 <$endforeach do$>
+@end
+
+@interface _<$managedObjectClassName$> (<$managedObjectClassName$>Type) <<$managedObjectClassName$>Type> 
 @end

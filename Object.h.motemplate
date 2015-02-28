@@ -1,0 +1,16 @@
+// DO NOT EDIT. This file is machine-generated and constantly overwritten.
+
+<$if TemplateVar.modules$>@import Foundation;<$else$>#import <Foundation/Foundation.h><$endif$>
+#import "<$managedObjectClassName$>Type.h"
+<$foreach Relationship noninheritedRelationships do$><$if !Relationship.isToMany$>#import "<$Relationship.destinationEntity.managedObjectClassName$>Object.h"<$endif$>
+<$endforeach do$>
+
+@interface <$managedObjectClassName$>Object : <$if hasSuperentity$><$customSuperentity$><$else$>NSObject<$endif$> <<$managedObjectClassName$>Type, NSSecureCoding, NSCopying>
+
+- (instancetype)initWith<$foreach Attribute noninheritedAttributes do$><$if AttributeIndex == 0$><$Attribute.name.initialCapitalString$><$else$><$Attribute.name$><$endif$>:(<$Attribute.objectAttributeType$>)<$Attribute.name$> <$endforeach do$><$foreach Relationship noninheritedRelationships do$><$Relationship.name$>:(<$if Relationship.isToMany$><$Relationship.immutableCollectionClassName$> *<$else$><$Relationship.destinationEntity.managedObjectClassName$>Object *<$endif$>)<$Relationship.name$> <$endforeach do$>;
+
+
+<$foreach Relationship noninheritedRelationships do$><$if !Relationship.isToMany$>@property (nonatomic) <$Relationship.destinationEntity.managedObjectClassName$>Object *<$Relationship.name$>;<$endif$>
+<$endforeach do$>
+
+@end

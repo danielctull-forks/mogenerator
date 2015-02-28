@@ -1,0 +1,44 @@
+// DO NOT EDIT. This file is machine-generated and constantly overwritten.
+
+
+<$foreach Relationship noninheritedRelationships do$><$if !Relationship.isToMany$>@protocol <$Relationship.destinationEntity.managedObjectClassName$>Type;
+<$endif$><$endforeach do$>
+
+<$if userInfo.documentation$>
+/**
+ * <$userInfo.documentation$>
+ *
+ * <$userInfo.discussion$>
+ */
+<$endif$>
+@protocol <$managedObjectClassName$>Type <$if hasSuperentity$><<$customSuperentity$>Type><$endif$>
+
+<$foreach Attribute noninheritedAttributes do$>
+<$if Attribute.userInfo.documentation$>
+/**
+ * <$Attribute.userInfo.documentation$>
+ *
+ * <$Attribute.userInfo.discussion$>
+ */
+<$endif$>
+<$if Attribute.hasDefinedAttributeType$>
+@property (nonatomic, readonly) <$Attribute.objectAttributeType$> <$Attribute.name$>;<$if Attribute.hasScalarAttributeType$>
+@property (nonatomic, readonly) <$Attribute.scalarAttributeType$> <$Attribute.name$>Value;<$endif$>
+<$endif$>
+<$endforeach do$>
+
+<$foreach Relationship noninheritedRelationships do$>
+<$if Relationship.userInfo.documentation$>
+/**
+ * <$Relationship.userInfo.documentation$>
+ *
+ * <$Relationship.userInfo.discussion$>
+ */
+<$endif$>
+<$if Relationship.isToMany$>
+@property (nonatomic, readonly) <$Relationship.immutableCollectionClassName$> *<$Relationship.name$>;
+<$else$>
+@property (nonatomic, readonly) id<<$Relationship.destinationEntity.managedObjectClassName$>Type> <$Relationship.name$>;
+<$endif$>
+<$endforeach do$>
+@end

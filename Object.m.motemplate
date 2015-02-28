@@ -1,0 +1,51 @@
+// DO NOT EDIT. This file is machine-generated and constantly overwritten.
+
+#import "<$managedObjectClassName$>Object.h"
+
+@implementation <$managedObjectClassName$>Object
+<$foreach Attribute noninheritedAttributes do$>@synthesize <$Attribute.name$> = _<$Attribute.name$>;
+<$if Attribute.hasScalarAttributeType$>@synthesize <$Attribute.name$>Value = _<$Attribute.name$>Value;
+<$endif$><$endforeach do$><$foreach Relationship noninheritedRelationships do$>@synthesize <$Relationship.name$> = _<$Relationship.name$>;
+<$endforeach do$>
+
+
+- (instancetype)initWith<$foreach Attribute noninheritedAttributes do$><$if AttributeIndex == 0$><$Attribute.name.initialCapitalString$><$else$> <$Attribute.name$><$endif$>:(<$Attribute.objectAttributeType$>)<$Attribute.name$><$endforeach do$><$foreach Relationship noninheritedRelationships do$> <$Relationship.name$>:(<$if Relationship.isToMany$><$Relationship.immutableCollectionClassName$> *<$else$><$Relationship.destinationEntity.managedObjectClassName$>Object *<$endif$>)<$Relationship.name$><$endforeach do$> {
+	self = [super init];
+	if (!self) return nil;
+	
+	<$foreach Attribute noninheritedAttributes do$>_<$Attribute.name$> = <$Attribute.name$>;
+	<$endforeach do$><$foreach Relationship noninheritedRelationships do$>_<$Relationship.name$> = <$Relationship.name$>;
+	<$endforeach do$>
+	return self;  
+}
+
+#pragma mark - NSSecureCoding
+
++ (BOOL)supportsSecureCoding {
+	return YES;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+	self = [super init];
+	if (!self) return nil;
+	<$foreach Attribute noninheritedAttributes do$>_<$Attribute.name$> = [coder decodeObject<$if Attribute.attributeValueClassName$>OfClass:[<$Attribute.attributeValueClassName$> class] f<$else$>F<$endif$>orKey:@"<$Attribute.name$>"];
+	<$endforeach do$>	
+	<$foreach Relationship noninheritedRelationships do$>_<$Relationship.name$> = [coder decodeObjectOfClass:[<$if Relationship.isToMany$><$Relationship.immutableCollectionClassName$><$else$><$Relationship.destinationEntity.managedObjectClassName$>Object<$endif$> class] forKey:@"<$Relationship.name$>"];
+	<$endforeach do$>
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+	<$foreach Attribute noninheritedAttributes do$>[coder encodeObject:self.<$Attribute.name$> forKey:@"<$Attribute.name$>"];
+	<$endforeach do$>
+	<$foreach Relationship noninheritedRelationships do$>[coder encodeObject:self.<$Relationship.name$> forKey:@"<$Relationship.name$>"];
+	<$endforeach do$>
+}
+
+#pragma mark - NSCopying
+
+- (instancetype)copyWithZone:(NSZone *)zone {
+	return [[<$managedObjectClassName$>Object allocWithZone:zone] initWith<$foreach Attribute noninheritedAttributes do$><$if AttributeIndex == 0$><$Attribute.name.initialCapitalString$><$else$> <$Attribute.name$><$endif$>:self.<$Attribute.name$><$endforeach do$><$foreach Relationship noninheritedRelationships do$> <$Relationship.name$>:self.<$Relationship.name$><$endforeach do$>];
+}
+
+@end

@@ -1,0 +1,40 @@
+// DO NOT EDIT. This file is machine-generated and constantly overwritten.
+
+<$if userInfo.documentation$>
+/**
+ * <$userInfo.documentation$>
+ *
+ * <$userInfo.discussion$>
+ */
+<$endif$>
+protocol <$managedObjectClassName$>Type<$if hasSuperentity$>: <$customSuperentity$>Type<$endif$> {
+
+	<$foreach Attribute noninheritedAttributes do$>
+	<$if Attribute.userInfo.documentation$>
+	/**
+	 * <$Attribute.userInfo.documentation$>
+	 *
+	 * <$Attribute.userInfo.discussion$>
+	 */
+	<$endif$>
+	<$if Attribute.hasDefinedAttributeType$>
+	var <$Attribute.name$>: <$Attribute.objectAttributeType$> { get }<$if Attribute.hasScalarAttributeType$>
+	var <$Attribute.name$>Value : <$Attribute.scalarAttributeType$> { get }<$endif$>
+	<$endif$>
+	<$endforeach do$>
+
+	<$foreach Relationship noninheritedRelationships do$>
+	<$if Relationship.userInfo.documentation && !Relationship.userInfo.documentation$>
+	/**
+	 * <$Relationship.userInfo.documentation$>
+	 *
+	 * <$Relationship.userInfo.discussion$>
+	 */
+	<$endif$>
+	<$if Relationship.isToMany$>
+	var <$Relationship.name$>: <$Relationship.immutableCollectionClassName$> { get }
+	<$else$>
+	var <$Relationship.name$>: <$Relationship.destinationEntity.managedObjectClassName$>Type { get }
+	<$endif$>
+	<$endforeach do$>
+}
